@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<div class="container">
+    <div class="row mt-lg-5">
+        <div class="col-3"></div>
+        <div class="col-6">
+             <div class="card bg-light" style="width: 18rem;">
+                <img src="{{request.user.users.profile_pic.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{request.user}}</h5>
+                    <p class="card-text">{{request.user.users.phone}}</p>
+                    <p class="card-text">{{request.user.users.bio}}</p>
+                    <p class="card-text">{{request.user.users.date_of_birth}}</p>
+                    <a href="{%url 'profile-update' request.user.users.id %}" class="btn btn-success">update profile</a>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+
+{%endblock%}

@@ -1,0 +1,70 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<div class="row mt-lg-5">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <h1> welcome </h1>
+    </div>
+    <div class="col-4"></div>
+</div>
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Post Blog
+            </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+             data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    {{form.as_p}}
+                    <input type="submit" value="post">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="row">-->
+<!--    <div class="col-4"></div>-->
+<!--    <div class="col-4">-->
+<!--        <form action="" method="post" enctype="multipart/form-data">-->
+<!--            {%csrf_token%}-->
+<!--            {{form.as_p}}-->
+<!--            <input type="submit" value="post">-->
+<!--        </form>-->
+<!--    </div>-->
+<!--    <div class="col-4"></div>-->
+<!--</div>-->
+<div class="row">
+    {%for blog in blogs%}
+    <div class="col-4"></div>
+    <div class="col-4 border mt-3">
+
+        <p><strong>{{blog.title}}</strong></p>
+        {%if blog.image%}
+        <img src="{{blog.image.url}}" class="img-fluid" alt="">
+        {%endif%}
+        <p>{{blog.description}}</p>
+        <p>posted_by: {{blog.author}}</p>
+        <p>created_at: {{blog.posted_date}}</p>
+        <a href="{%url 'add-like' blog.id%}">like</a>
+        {{blog.get_like_count}}
+        <p>{{blog.get_liked_users}}</p>
+        <form action="{%url 'add-comment' blog.id%}" method="post">
+            {%csrf_token%}
+            {{comment_form.as_p}}
+            <input type="submit" value="add">
+        </form>
+        {%for comment in blog.comments_set.all%}
+        <div>{{comment.user}}</div>
+        <div>{{comment.comment}}</div>
+        {%endfor%}
+
+    </div>
+    <div class="col-4"></div>
+    {%endfor%}
+</div>
+{%endblock%}
